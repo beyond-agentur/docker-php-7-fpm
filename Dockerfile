@@ -212,10 +212,13 @@ RUN runtimeRequirements="libxslt-dev" \
     && apt-get purge -y ${buildRequirements} \
     && rm -rf /var/lib/apt/lists/*
 
+# create symlink to support standard /usr/bin/php
+RUN ln -s /usr/local/bin/php /usr/bin/php
+
 # yaml
 RUN buildRequirements="libyaml-dev" \
 	&& apt-get update && apt-get install -y ${buildRequirements} \
-	&& pecl install yaml \
+	&& pecl install yaml-beta \
 	&& echo "extension=yaml.so" > /usr/local/etc/php/conf.d/ext-yaml.ini \
 	&& apt-get purge -y ${buildRequirements} \
 	&& rm -rf /var/lib/apt/lists/*
