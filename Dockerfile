@@ -228,11 +228,12 @@ RUN docker-php-ext-install -j$(nproc) zip
 # Activate login for user www-data
 RUN chsh www-data -s /bin/bash
 
-ADD assets/php.ini /usr/local/etc/php/conf.d/php.ini
-
 # locales
 ADD assets/locale.gen /etc/locale.gen
 RUN apt-get update \
 	&& apt-get install -y locales \
 	&& rm -r /var/lib/apt/lists/* \
 	&& locale-gen
+
+ADD assets/php.ini /usr/local/etc/php/conf.d/php.ini
+ADD etc/php-fpm.d/www.conf /usr/local/etc/php-fpm.d/www.conf
